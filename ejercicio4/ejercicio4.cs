@@ -1,24 +1,27 @@
 ﻿
+using System.Net.WebSockets;
+
 Console.WriteLine("----------INGRESE UNA CADENA DE TEXTO----------");
 
+//INGRESAMOS CADENA Y OBTENEMOS LONGITUD
 // string cadena1 = Console.ReadLine(); //para que no aparezca lo de null tenemos que comentar la linea del .proj
 string cadena1 = "Hola como estas?";
 System.Console.WriteLine(cadena1);
 System.Console.WriteLine();
 System.Console.WriteLine("La longitud de la cadena1 ingresada es:" + cadena1.Length + "\n"); //cadena1.Length nos devuelve la longitud de la cadena
 
+//INGRESAMOS OTRA CADENA Y CONCATENAMOS A LA PRIMERA
 System.Console.WriteLine("----------Ahora ingrese otra cadena para concatenar con la anterior----------");
 System.Console.WriteLine();
 // string cadena2 = Console.ReadLine();
-string cadena2 = "todo bien?";
+string cadena2 = "todo bien?todo bien?todo bien?todo bien?";
 // string concatenado1 = string.Concat(cadena1, cadena2);
-
 string concatenadas2 = $"{cadena1} {cadena2}"; //misma forma que la de arriba pero solo que abreviada. Es importante el espacio del medio
 System.Console.WriteLine("las cadenas ingresadas concatenadas son: " + concatenadas2 + "\n");
 
-string subcadenaBuscada = "todo";
+//EXTRAEMOS UNA SUBCADENA DE LA CADENA CONCATENADA
+string subcadenaBuscada = "todo bien?";
 int indiceInicio = concatenadas2.IndexOf(subcadenaBuscada, 0, concatenadas2.Length); //obtengo el indice del comienzo de la primera ocurrencia de mi subcadena buscada
-
 System.Console.WriteLine("una sub cadena de la cadena ingreseda es:" + concatenadas2.Substring(indiceInicio, subcadenaBuscada.Length)); //cuando muestro por pantalla con el metodo .substring(indiceInicio, subcadenaBuscada.Length) hago que solo se imprima una subcadena de la cadena original hasta determinada longitud de la cadena misma
 System.Console.WriteLine();
 
@@ -192,11 +195,46 @@ System.Console.WriteLine();
 //     }
 // }
 
-System.Console.WriteLine("a continuacion se imprime la segunda cadena ingresada caracter a caracter:");
-foreach (char c in cadena2)
-{
-    System.Console.WriteLine(c);
+
+//RECORREMOS CON UN BUCLE FOREACH PARA MOSTRAR CARACTER A CARACTER DE LA CADENA CONCATENADA
+// System.Console.WriteLine("a continuacion se imprime la segunda cadena ingresada caracter a caracter:");
+// foreach (char c in cadena2)
+// {
+//     System.Console.WriteLine(c);
+// }
+
+//BUSQUEDA DE OCURRENCIAS DE UNA PALABRA
+int inicioPalabra = 0;
+int finPalabra = concatenadas2.Length;
+int recorrido; 
+string palabraBuscada = "todo";
+int contador = 0;
+int indiceOcurrencia = 0;
+while (indiceOcurrencia != -1){
+
+    recorrido = finPalabra-inicioPalabra;
+    indiceOcurrencia = concatenadas2.IndexOf(palabraBuscada, inicioPalabra, recorrido);//busco el indice de la primera letra de la primera ocurrencia partiendo desde el primer caracter de la cadena de caracteres
+    if (indiceOcurrencia == -1) break;
+    contador = contador+1;
+    inicioPalabra = indiceOcurrencia + 1;
 }
 
+
+System.Console.WriteLine("El numero de ocurrencias de la palabra {0} es: {1}", palabraBuscada, contador);
+System.Console.WriteLine();
+
+//MAYUSCULAS Y MINUSCULAS
 System.Console.WriteLine("La cadena concatenada en mayusculas es: "+ concatenadas2.ToUpper());
 System.Console.WriteLine("La cadena concatenada en minisculas es: "+ concatenadas2.ToLower());
+
+//ingrese una cadena separada por caracteres que usted determine y muestre por pantalla los resultados
+System.Console.WriteLine("------------------------------");
+System.Console.WriteLine("INGRESE UNA CADENA SEPARADA POR ALGUN CARACTER: ");
+string cadenaSeparada = Console.ReadLine();
+System.Console.WriteLine("La cadena ingresada es: "+cadenaSeparada);
+string[] cadenaSeparadaArray = cadenaSeparada.Split('?');
+System.Console.WriteLine("La cadena ingresada separada por el caracter ? es: ");
+foreach (string palabra in cadenaSeparadaArray){
+    System.Console.WriteLine(palabra);
+}
+System.Console.WriteLine("------------------------------");
