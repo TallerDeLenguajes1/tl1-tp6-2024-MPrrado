@@ -7,7 +7,7 @@ Un string es un tipo por referencia, es decir que si a una variable del tipo **_
 ## **¿Qué secuencias de escape tiene el tipo string?**
 
 La secuncias de escape del tipo string es:
-**secuncia de escape** **Nombre del caracter** **Codificacion unicode** 
+
 1. \'	Comilla simple	0x0027
 2. \"	Comilla doble	0x0022
 3. \	Barra diagonal inversa	0x005C
