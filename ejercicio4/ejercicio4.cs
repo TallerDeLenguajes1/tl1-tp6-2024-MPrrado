@@ -26,13 +26,23 @@ System.Console.WriteLine("una sub cadena de la cadena ingreseda es:" + concatena
 System.Console.WriteLine();
 
 //UTILIZANDO CALCULADORA 
-
-string[] arregloOperandos =  Console.ReadLine().Split("+");
-calculadora();
+System.Console.WriteLine("Ahora usaremos la calculadora del punto anterior para operar dos numeros ingresados de como string");
+System.Console.WriteLine("Ingrese el primer numero para operar");
+if (int.TryParse(System.Console.ReadLine(), out int num1))
+{
+    System.Console.WriteLine("Ingrese el primer numero para operar");
+    if (int.TryParse(System.Console.ReadLine(), out int num2))
+    {
+        Calculadora(num1, num2);
+    }
+}
+System.Console.WriteLine();
+System.Console.WriteLine("----------------------------");
 
 
 //RECORREMOS CON UN BUCLE FOREACH PARA MOSTRAR CARACTER A CARACTER DE LA CADENA CONCATENADA
 System.Console.WriteLine("a continuacion se imprime la segunda cadena ingresada caracter a caracter:");
+System.Console.WriteLine();
 foreach (char c in cadena2)
 {
     System.Console.WriteLine(c);
@@ -56,7 +66,6 @@ while (indiceOcurrencia != -1)
 }
 
 
-System.Console.WriteLine("El numero de ocurrencias de la palabra {0} es: {1}", palabraBuscada, contador);
 System.Console.WriteLine();
 
 //MAYUSCULAS Y MINUSCULAS
@@ -76,15 +85,88 @@ foreach (string palabra in cadenaSeparadaArray)
 }
 System.Console.WriteLine("------------------------------");
 
+//a partir de una ecuacion simple como 543+2 spliteo el string con el operador y sumo sus valores
 
-
-
-
-
-
-static void calculadora(int numero1, int numero2)
+System.Console.WriteLine("Ingresar una ecuacion simple por ejemplo 321+43");
+System.Console.WriteLine();
+char[] operadores = { '+', '-', '/', '*' }; //este arreglo de char me permite elegir entre que chars se separara la cadena ingresada
+String ecuacion = Console.ReadLine(); //leo la ecuacion simple
+string[] arregloOperandos = ecuacion.Split(operadores); //me armo mi arreglo con los operandos de la expresion
+int indiceOperador = -1;
+int i = 0;
+while (indiceOperador == -1)
 {
-    static bool operacionCalculadora(bool salir, int opcion,int numero1, int numero2)
+    indiceOperador = ecuacion.IndexOf(operadores[i]);
+    if (indiceOperador != -1)
+    {
+        break;
+    }
+    else
+    {
+        i++;
+        if (i > ecuacion.Length)
+        {
+            break;
+        }
+    }
+}
+if (indiceOperador == -1)
+{
+    System.Console.WriteLine("Error la expresion ingresada tiene un operador invalido");
+
+}
+else
+{
+    if (int.TryParse(arregloOperandos[0], out int numeroSplit1))
+    {
+        if (int.TryParse(arregloOperandos[1], out int numeroSplit2))
+        {
+            // System.Console.WriteLine($"numero1 = {numeroSplit1}");
+            // System.Console.WriteLine($"numero2 = {numeroSplit2}");
+            string operador = ecuacion.Substring(indiceOperador, 1);
+            switch (operador)
+            {
+                case "+":
+                    string resultado = sumar(numeroSplit1, numeroSplit2);
+                    Console.WriteLine(resultado);
+                    break;
+
+                case "-":
+                    resultado = restar(numeroSplit1, numeroSplit2);
+                    Console.WriteLine(resultado);
+                    break;
+
+                case "*":
+                    resultado = multiplicar(numeroSplit1, numeroSplit2);
+                    Console.WriteLine(resultado);
+                    break;
+
+                case "/":
+                    resultado = dividir(numeroSplit1, numeroSplit2);
+                    Console.WriteLine(resultado);
+                    break;
+            }
+        }
+        else
+        {
+            System.Console.WriteLine("El segundo termino de la ecuacion no es un numero valido");
+        }
+    }
+    else
+    {
+        System.Console.WriteLine("El primer termino de la ecuacion no es un numero valido");
+    }
+}
+
+
+
+
+
+
+//funciones y calculadora
+static void Calculadora(int numero1, int numero2)
+{
+    static bool operacionCalculadora(bool salir, int opcion, int numero1, int numero2)
     {
         string resultado;
         switch (opcion)
@@ -121,88 +203,8 @@ static void calculadora(int numero1, int numero2)
         return salir;
     }
 
-    static string sumar(int numero1, int numero2)
-    {
-        float suma;
-        suma = numero1 + numero2;
-        string resultado = "La suma de " + numero1 + " y de " +  numero2 + " es igual a: " + suma;
-        return resultado;
-    }
+    // NewMethod();
 
-    static string restar(int numero1, int numero2)
-    {
-        float resta;
-        resta = numero1 + numero2;
-        string resultado = "La suma de " + numero1 + " y de " +  numero2 + " es igual a: " + resta;
-        return resultado;
-    }
-
-    static string multiplicar(int numero1, int numero2)
-    {
-        float producto;
-        producto = numero1 + numero2;
-        string resultado = "La suma de " + numero1 + " y de " +  numero2 + " es igual a: " + producto;
-        return resultado;
-    }
-
-    static string dividir(int numero1, int numero2)
-    {
-        float division;
-        division = numero1 + numero2;
-        string resultado = "La suma de " + numero1 + " y de " +  numero2 + " es igual a: " + division;
-        return resultado;
-    }
-
-    
-    // static void MejorasCalculadora()
-    // {    //     System.Console.WriteLine("----------Funcion Mejoradas--------\n");
-    //     Console.WriteLine("Ingrese un numero: ");
-    //     if (float.TryParse(Console.ReadLine(), out float num))
-    //     {
-    //         Console.WriteLine("---El valor absoluto del numero es:" + Math.Abs(num));
-    //         float cuadrado = (float)Math.Pow(num, 2);
-    //         Console.WriteLine("---El cuadrado del numero es:" + Math.Round(cuadrado, 2));
-    //         if (num < 0)
-    //         {
-    //             Console.WriteLine("---No se puede calcular la raiz cuadrada del numero");
-    //         }
-    //         else
-    //         {
-    //             float raiz = (float)Math.Sqrt(num);
-    //             Console.WriteLine("---La raiz cuadrada del numero es:" + Math.Round(raiz, 2));
-    //         }
-    //         float seno = (float)Math.Sin(num);
-    //         float coseno = (float)Math.Cos(num);
-    //         Console.WriteLine("---El seno del numero es:" + Math.Round(seno, 2));
-    //         Console.WriteLine("---El coseno del numero es:" + Math.Round(coseno, 2));
-    //         Console.WriteLine("---La parte entera del numero es:" + Math.Truncate(num));
-    //         Console.WriteLine("------Calculo de maximo y minimo entre dos numeros------");
-    //         Console.WriteLine("Ingrese el primer numero: ");
-    //         if (float.TryParse(Console.ReadLine(), out float num1))
-    //         {
-    //             Console.WriteLine("Ingrese el segundo numero: ");
-    //             if (float.TryParse(Console.ReadLine(), out float num2))
-    //             {
-    //                 Console.WriteLine("---El maximo entre los dos numeros es:" + Math.Max(num1, num2));
-    //                 Console.WriteLine("---El minimo entre los dos numeros es:" + Math.Min(num1, num2));
-    //             }
-    //             else
-    //             {
-    //                 Console.WriteLine("ERROR EL SEGUNDO NUMERO NO ES VALIDO");
-    //             }
-    //         }
-    //         else
-    //         {
-    //             Console.WriteLine("ERROR EL PRIMER NUMERO NO ES VALIDO");
-    //         }
-
-    //     }
-    //     else
-    //     {
-    //         Console.WriteLine("ERROR EL DATO DE ENTRADA TIENE QUE SER UN NUMERO VALIDO");
-    //     }
-
-    // }
     bool salir = true;
 
     Console.WriteLine("--------MENU CALCUADORA V1.0.0-------");
@@ -224,4 +226,36 @@ static void calculadora(int numero1, int numero2)
             salir = operacionCalculadora(salir, opcion, numero1, numero2);
         }
     }
+}
+
+static string sumar(int numero1, int numero2)
+{
+    float suma;
+    suma = numero1 + numero2;
+    string resultado = "La suma de " + numero1 + " y de " + numero2 + " es igual a: " + suma;
+    return resultado;
+}
+
+static string restar(int numero1, int numero2)
+{
+    float resta;
+    resta = numero1 - numero2;
+    string resultado = "La resta de " + numero1 + " y de " + numero2 + " es igual a: " + resta;
+    return resultado;
+}
+
+static string multiplicar(int numero1, int numero2)
+{
+    float producto;
+    producto = numero1 * numero2;
+    string resultado = "La multiplicacion de " + numero1 + " y de " + numero2 + " es igual a: " + producto;
+    return resultado;
+}
+
+static string dividir(int numero1, int numero2)
+{
+    float division;
+    division = numero1 / numero2;
+    string resultado = "La diviison de " + numero1 + " y de " + numero2 + " es igual a: " + division;
+    return resultado;
 }
